@@ -41,9 +41,9 @@ jobs:
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
         run: | 
           cp main.py temp.py
-          echo $CONFIG_ID > configid.txt
-          echo $CONFIG_KEY > configkey.txt
-          echo $REFRESH_TOKEN > refreshtoken.txt
+          echo "$CONFIG_ID" > configid.txt
+          echo "$CONFIG_KEY" > configkey.txt
+          echo "$REFRESH_TOKEN" > refreshtoken.txt
           sed -i '10 r configid.txt' temp.py
           sed -i '12 r configkey.txt' temp.py
           sed -i '14 r refreshtoken.txt' temp.py
@@ -53,7 +53,10 @@ jobs:
           echo $(date +"%Y-%m-%d %H:%M:%S") begin > time.log
           python3 temp.py
 
-      - name: Commit updated refresh token
+      - name: Lista dei file dopo l'esecuzione dello script
+        run: ls -la
+
+      - name: Commit aggiornato del refresh token
         run: |
           git config --global user.email "your-email@example.com"
           git config --global user.name "your-username"
