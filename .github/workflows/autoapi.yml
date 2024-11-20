@@ -58,6 +58,11 @@ jobs:
         rm -f configkey.txt
         rm -f refreshtoken.txt
         rm -f Secret.txt
+    - name: Commit and Push
+      run: |
+        git add refreshtoken.txt
+        git commit -m "Update refresh token"
+        git push
     - name: Commit #Upload a new refresh_token to the repository
       run: |
         git config --global user.email kjmcabangon@slsu.edu.ph
