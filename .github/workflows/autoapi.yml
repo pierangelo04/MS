@@ -18,8 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     if: (github.event.repository.owner.id == github.event.sender.id) || ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}  # Self-ordered start
-    #if: github.event.repository.owner.id == github.event.sender.id  # Self-ordered start
     name: Build and call API
+    permissions:
+      contents: write
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -60,13 +61,12 @@ jobs:
         rm -f Secret.txt
     - name: Commit #Upload a new refresh_token to the repository
       run: |
-        git config --global user.email kjmcabangon@slsu.edu.ph
-        git config --global user.name kylierst
+        git config --global user.email "kjmcabangon@slsu.edu.ph"
+        git config --global user.name "kylierst"
         git add .
         git commit -m "Update new refresh token with MSO_E5_Dev_AutoRenew" -a
     - name: Push changes
       uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
-        #force_with_lease: true
+        branch: main
